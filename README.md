@@ -6,7 +6,7 @@ uses ffmpeg to reencode mp3 files. Didn't test with mp4 yet. Will add a playlist
 
 # txt-file format:
 On each line:
-youtube-link | relative-path.extension. 
+youtube-link | relative-path.extension 
 
 ## note:
 trailing newlines will error!
