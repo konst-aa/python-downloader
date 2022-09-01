@@ -2,17 +2,13 @@
 from pytube import YouTube
 import sys, getopt
 import os
-# where to save 
-SAVE_PATH = "E:/" #to_do 
-
-# link of the video to be downloaded 
-link="https://www.youtube.com/watch?v=xWOoBJUqlbI"
 
 def main(argv):
     opts = []
     try:
         opts, args = getopt.getopt(argv,"hl:o:f:")
     except getopt.GetoptError:
+        print("python main.py -l <yt-link> -o <output-path | output-dir if reading from a file> -f <txt-file>")
         sys.exit(2)
     opts_dict = dict(opts)
     jobs = []
@@ -28,8 +24,6 @@ def main(argv):
     for link, output_file in jobs:
         print(f"downloading link {link} as {output_file}")
         try:
-            # object creation using YouTube
-            # which was imported in the beginning 
             yt = YouTube(link)
         except:
             raise(Exception("Connection Error"))
@@ -38,5 +32,7 @@ def main(argv):
         streams[0].download(output_path=out, filename=(output_file if ext != "mp3" else "temp.wav"))
         if ext == "mp3":
             os.system(f"ffmpeg -i {((out + '/') if out else '') + 'temp.wav'} -codec:a libmp3lame -qscale:a 2 " + ((out + "/") if out else "") + '\ '.join(output_file.split(' ')))
+
+            
 if __name__ == "__main__":
-   main(sys.argv[1:])
+    main(sys.argv[1:])
